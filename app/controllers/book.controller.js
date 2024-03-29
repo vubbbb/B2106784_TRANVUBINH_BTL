@@ -2,7 +2,7 @@ exports.getAllBooks = (req, res) => {
     res.send({massage: "getAllBooks handler"});
 };
 
-exports.getSingleBook = (req, res) => {
+exports.getBookById = (req, res) => {
     res.send({massage: "getSingleBook handler"});
 };
 

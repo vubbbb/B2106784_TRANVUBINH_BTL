@@ -17,3 +17,7 @@ exports.updateBook = (req, res) => {
 exports.deleteBook = (req, res) => {
     res.send({massage: "deleteBook handler"});
 };
+
+exports.getBookCount = (req, res) => {
+    res.send({massage: "deleteBook handler"});
+};

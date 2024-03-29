@@ -11,7 +11,7 @@ app.use(express.json());
 // Routes
 const authRouter = require('./app/routers/auth.route');
 const bookRouter = require('./app/routers/book.route');
-
+const userRouter = require('./app/routers/user.route');
 
 app.get("/", (req, res) =>{
     res.json({message: "Welcome to my bookstore."});
@@ -19,6 +19,10 @@ app.get("/", (req, res) =>{
 
 app.use("/api/auth", authRouter);
 app.use("/api/book", bookRouter);
+app.use("/api/user", userRouter);
+
+
+
 
 module.exports = app;
 

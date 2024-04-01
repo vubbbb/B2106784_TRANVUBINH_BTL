@@ -12,6 +12,8 @@ app.use(express.json());
 const authRouter = require('./app/routers/auth.route');
 const bookRouter = require('./app/routers/book.route');
 const userRouter = require('./app/routers/user.route');
+const orderRouter = require('./app/routers/order.route');
+const cartRouter = require("./app/routers/cart.route");
 
 app.get("/", (req, res) =>{
     res.json({message: "Welcome to my bookstore."});
@@ -20,7 +22,8 @@ app.get("/", (req, res) =>{
 app.use("/api/auth", authRouter);
 app.use("/api/book", bookRouter);
 app.use("/api/user", userRouter);
-
+app.use("/api/order", orderRouter);
+app.use("api/cart", cartRouter);
 
 
 

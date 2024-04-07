@@ -24,6 +24,15 @@ app.use("/api/order", orderRouter);
 app.use("api/cart", cartRouter);
 
 
+// middleware xử lí lỗi
+app.use((error, req, res, next) => {
+    if (error instanceof ApiError) {
+      return res.status(error.statusCode).json({message: error.message});
+    }
+    console.log(error);
+    res.status(500).json({ message: 'Đã xảy ra lỗi khi xử lí ở server' });
+  });
+
 
 module.exports = app;
 

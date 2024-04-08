@@ -13,12 +13,12 @@ router.route("/info/:id")
     .get(userController.getUserInfoByID)
     .put(userController.changeUserInfo)
 
-router.route("/cart")
-    .get(userController.getUserCart)
-    .post(userController.addCart)
-    .patch(userController.updateBookInCart)
+router.route("/order")
+    .get(userController.getUserOrder)
+    .post(userController.addOrder)
+    .patch(userController.updateBookInOrder)
 
-router.route("/cart/:id")
+router.route("/Order/:id")
     .delete(userController.removeBook)
 
 

@@ -3,64 +3,81 @@ const mongoose = require('mongoose')
 
 
 
+
+exports.getBookByName = async (req, res) => {
+    try {
+        const name = req.query.name;
+        const book = await Book.find({ name: { $regex: name, $options: 'i' } });
+        if (book.length === 0)
+            return res.status(404).json({ error: "khong tim thay san pham" });
+        res.status(200).json(book);
+    } catch (error) {
+        res.status(500).json({ message: error.massage });
+    }
+}
+
 exports.getAllBooks = async (req, res) => {
-    try{
+    try {
         const book = await Book.find({});
         res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({message: error.massage});
+        res.status(500).json({ message: error.massage });
     }
 };
 
 exports.getBookById = async (req, res) => {
-    try{
-        const {id} = req.params;
+    try {
+        const { id } = req.params;
         const book = await Book.findById(id);
         res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({message: error.massage});
+        res.status(500).json({ message: error.massage });
     }
 };
 
 exports.createBook = async (req, res) => {
-    try{
-        const book = await Book.create(req.body); 
+    try {
+        const book = await Book.create(req.body);
         res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({message: error.massage});
+        res.status(500).json({ message: error.massage });
     }
 };
 
+
+
+
+
 exports.updateBook = async (req, res) => {
-    try{
-        const {id} = req.params;
+    try {
+        const { id } = req.params;
         const book = await Book.findByIdAndUpdate(id, req.body);
-        if(!book){
-            return res.status(404).json({massage: "Book not found"});
+        if (!book) {
+            return res.status(404).json({ massage: "Book not found" });
         }
 
         const updatedbook = await Book.findById(id);
 
         res.status(200).json(updatedbook);
     } catch (error) {
-        res.status(500).json({message: error.massage});
+        res.status(500).json({ message: error.massage });
     }
 };
 
 exports.deleteBook = async (req, res) => {
-    try{
-        const {id} = req.params;
+    try {
+        const { id } = req.params;
         book = await Book.findByIdAndDelete(id);
-        if(!book){
-            return res.status(404).json({massage: "Book not found"});
+        if (!book) {
+            return res.status(404).json({ massage: "Book not found" });
         }
 
-        res.status(200).json({massage: "Book deleted successfully"});
+        res.status(200).json({ massage: "Book deleted successfully" });
     } catch (error) {
-        res.status(500).json({message: error.massage});
+        res.status(500).json({ message: error.massage });
     }
 };
 
 exports.getBookCount = (req, res) => {
-    res.send({massage: "deleteBook handler"});
+    res.send({ massage: "deleteBook handler" });
 };

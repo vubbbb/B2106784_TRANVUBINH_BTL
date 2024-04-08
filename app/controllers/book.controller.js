@@ -3,12 +3,23 @@ const mongoose = require('mongoose')
 
 
 
-exports.getAllBooks = (req, res) => {
-    res.send({massage: "getAllBooks handler"});
+exports.getAllBooks = async (req, res) => {
+    try{
+        const book = await Book.find({});
+        res.status(200).json(book);
+    } catch (error) {
+        res.status(500).json({message: error.massage});
+    }
 };
 
-exports.getBookById = (req, res) => {
-    res.send({massage: "getSingleBook handler"});
+exports.getBookById = async (req, res) => {
+    try{
+        const {id} = req.params;
+        const book = await Book.findById(id);
+        res.status(200).json(book);
+    } catch (error) {
+        res.status(500).json({message: error.massage});
+    }
 };
 
 exports.createBook = async (req, res) => {
@@ -20,12 +31,34 @@ exports.createBook = async (req, res) => {
     }
 };
 
-exports.updateBook = (req, res) => {
-    res.send({massage: "updateBook handler"});
+exports.updateBook = async (req, res) => {
+    try{
+        const {id} = req.params;
+        const book = await Book.findByIdAndUpdate(id, req.body);
+        if(!book){
+            return res.status(404).json({massage: "Book not found"});
+        }
+
+        const updatedbook = await Book.findById(id);
+
+        res.status(200).json(updatedbook);
+    } catch (error) {
+        res.status(500).json({message: error.massage});
+    }
 };
 
-exports.deleteBook = (req, res) => {
-    res.send({massage: "deleteBook handler"});
+exports.deleteBook = async (req, res) => {
+    try{
+        const {id} = req.params;
+        book = await Book.findByIdAndDelete(id);
+        if(!book){
+            return res.status(404).json({massage: "Book not found"});
+        }
+
+        res.status(200).json({massage: "Book deleted successfully"});
+    } catch (error) {
+        res.status(500).json({message: error.massage});
+    }
 };
 
 exports.getBookCount = (req, res) => {

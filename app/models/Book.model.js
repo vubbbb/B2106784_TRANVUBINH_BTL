@@ -2,11 +2,7 @@ const mongoose = require("mongoose");
 
 
 
-const bookSchema = mongoose.Schema({
-    id: {
-        type: String,
-        require: true,
-    },
+const bookSchema = new mongoose.Schema({
     name: {
         type: String,
         require: true,

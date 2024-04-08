@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-import {Schema, ObjectId } from 'mongoose';
-import isEmail from 'validator/lib/isEmail';
+// import {Schema, ObjectId } from 'mongoose';
+// import isEmail from 'validator/lib/isEmail';
 
 
-const readerSchema = new mongoose.Schema({
-    id: { type: ObjectId},
-    firtName: {
+const userSchema = new mongoose.Schema({
+    firstName: {
         type: String,
         require: true,
     },
@@ -31,18 +30,18 @@ const readerSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        validate: {
-            validator: (value) => isEmail,
-            message: 'Email is incorrect format'
-        },
+        // validate: {
+        //     validator: (value) => isEmail,
+        //     message: 'Email is incorrect format'
+        // },
         require: true,
     },
     phoneNumber: {
         type: String,
-        validate: {
-            validator: (phoneNumber) => phoneNumber.length > 9,
-            massage: 'Phone number is incorrect format'
-        },
+        // validate: {
+        //     validator: (phoneNumber) => phoneNumber.length > 9,
+        //     massage: 'Phone number is incorrect format'
+        // },
         require: true,
     },
     password: {
@@ -56,6 +55,6 @@ const readerSchema = new mongoose.Schema({
     }
 });
 
-const Reader = mongoose.model('Reader', readerSchema)
+const User = mongoose.model('User', userSchema)
 
-module.exports = Reader
+module.exports = User

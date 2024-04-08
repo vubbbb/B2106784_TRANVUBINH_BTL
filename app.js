@@ -5,6 +5,8 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
 
 // Routes
 const authRouter = require('./app/routers/auth.route');

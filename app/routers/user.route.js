@@ -9,8 +9,8 @@ router.route("/")
     .post(userController.register)
     .patch(userController.changePassword)
 
-router.route("/info")
-    .get(userController.getUserInfo)
+router.route("/info/:id")
+    .get(userController.getUserInfoByID)
     .put(userController.changeUserInfo)
 
 router.route("/cart")

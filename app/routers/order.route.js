@@ -11,7 +11,7 @@ router.route("/")
 router.route("/user")
     .get(orderController.getUserOrder)
 
-router.route("/cancel/:id")
+router.route("/cancel")
     .patch(orderController.cancelOrder)
 
 

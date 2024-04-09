@@ -2,11 +2,9 @@ const express = require('express');
 const router = express.Router();
 // goi file controller
 const userController = require("../controllers/user.controller");
-const { post } = require('./auth.route');
 
 router.route("/")
     .get(userController.getAllUsers)
-    .post(userController.register)
     .patch(userController.changePassword)
 
 router.route("/info/:id")

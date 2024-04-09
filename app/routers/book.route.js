@@ -1,6 +1,5 @@
 const express = require('express');
 const router = express.Router();
-// goi file controller
 const bookController = require("../controllers/book.controller");
 
 

@@ -7,6 +7,10 @@ const bookSchema = new mongoose.Schema({
         type: String,
         require: true,
     },
+    author: {
+        type: String,
+        require: true,
+    },
     cost: {
         type: Number,
         require: true,
@@ -16,7 +20,7 @@ const bookSchema = new mongoose.Schema({
         require: true,
     },
     yearOfPublication: {
-        type: Date,
+        type: String,
         require: false,
     },
     image: {

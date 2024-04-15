@@ -1,5 +1,6 @@
 const express = require('express')
 const cors = require('cors');
+const passport = require('passport');
 
 const app = express();
 
@@ -20,6 +21,8 @@ const publisherRouter = require('./app/routers/publisher.route');
 app.get("/", (req, res) =>{
     res.json({message: "Welcome to my bookstore."});
 });
+require('./api/config/passport');
+app.use(passport.initialize());
 
 app.use("/api/auth", authRouter);
 app.use("/api/book", bookRouter);

@@ -1,7 +1,4 @@
 const mongoose = require("mongoose");
-var crypto = require('crypto');
-var jwt = require('jsonwebtoken');
-
 
 
 const userSchema = new mongoose.Schema({
@@ -47,41 +44,17 @@ const userSchema = new mongoose.Schema({
         require: true,
         default: Date.now
     },
-<<<<<<< HEAD
     isAdmin: {
         type: Boolean,
         default: false,
+    }, 
+    password: {
+        type: String,
+        require: true,
     }
-=======
-    hash: String,
-    salt: String
->>>>>>> 3fcda5d6c577a59712b3ef4544ac5a03e1ad2610
 });
 
-//save the reference to the password
-userSchema.methods.setPassword = function (password) {
-    this.salt = crypto.randomBytes(16).toString('hex');
-    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-};
 
-// Checking the password
-userSchema.methods.validPassword = function(password) {
-    var hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha512').toString('hex');
-    return this.hash === hash;
-};
-
-// Generate JWT
-userSchema.methods.generateJwt = function() {
-    var expiry = new Date();
-    expiry.setDate(expiry.getDate() + 7);
-  
-    return jwt.sign({
-      _id: this._id,
-      email: this.email,
-      name: this.name,
-      exp: parseInt(expiry.getTime() / 1000),
-    }, "MY_SECRET"); // DO NOT KEEP YOUR SECRET IN THE CODE!
-  };
 const User = mongoose.model('User', userSchema)
 
 module.exports = User

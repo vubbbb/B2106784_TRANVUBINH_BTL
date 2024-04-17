@@ -1,33 +1,39 @@
-const User = require('../models/User.model');
+const User = require("../models/User.model");
 
-exports.login = (req, res) => {
-    // Implement login logic using the User model
-    // For example:
-    const { username, password } = req.body;
-    User.findOne({ username, password }, (err, user) => {
-        if (err) {
-            res.status(500).send({ message: 'Internal server error' });
-        } else if (!user) {
-            res.status(401).send({ message: 'Invalid credentials' });
-        } else {
-            // Perform any additional logic here
-            res.send({ message: 'Login successful' });
-        }
-    });
+exports.login = async (req, res) => {
+  try {
+    const email = req.body.email;
+    const inptPassword = req.body.password;
+    const user = await User.findOne({ email: email, password: inptPassword });
+    if (user) {
+      res.status(200).json("Login successful!");
+    } else {
+      return res.status(404).json("Incorrect email or password!");
+    }
+    const { password, ...others } = user._doc;  
+
+      const accessToken = jwt.sign(
+      {
+          id: user._id,
+          isAdmin: user.isAdmin,
+      }, 
+      process.env.JWT_SEC,
+          {expiresIn:"3d"}
+      );
+
+     res.status(200).json({...others, accessToken});
+
+  } catch (err) {
+    res.status(500).json(err);
+  }
 };
 
-exports.logout = (req, res) => {
-    // Implement logout logic using the User model
-    // For example:
-    // Clear any session data or perform any other necessary tasks
-    res.send({ message: 'Logout successful' });
-};
 
 exports.register = async (req, res) => {
-    try {
-        const user = await User.create(req.body);
-        res.status(200).json(user);
-    } catch (error) {
-        res.status(500).json({ message: error.massage });
-    }
+  try {
+    const user = await User.create(req.body);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(500).json({ message: error.massage });
+  }
 };

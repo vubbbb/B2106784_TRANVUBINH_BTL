@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema({
         type: String,
         enum: {
             values: ['male', 'female', 'other', 'unknown'],
-            massage:  '{VALUE} is not supported'
+            massage: '{VALUE} is not supported'
         },
         require: true,
     },
@@ -52,6 +52,10 @@ const userSchema = new mongoose.Schema({
         type: Date,
         require: true,
         default: Date.now
+    },
+    isAdmin: {
+        type: Boolean,
+        default: false,
     }
 });
 

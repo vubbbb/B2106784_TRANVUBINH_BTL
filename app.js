@@ -3,9 +3,17 @@ const cors = require('cors');
 
 const app = express();
 
+const { createJWT, verifyToken } = require('./app/middleware/verifyToken');
+
+
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+// test JWT
+createJWT();
+var decoded = verifyToken('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiTHVhbiIsImFnZSI6MjAsImlhdCI6MTcxMzM1OTYzNH0.trxcpkNx2r_BGMg35yqSfoobFyS5cAcqsulAswlDj-8');
+console.log(decoded);
 
 
 // Routes

@@ -10,8 +10,6 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
-
-
 exports.changePassword = (req, res) => {
     res.send({ massage: "changePassword" });
 };
@@ -25,6 +23,7 @@ exports.getUserInfoByID = async (req, res) => {
         res.status(500).json({ message: error.massage });
     }
 };
+
 
 
 exports.changeUserInfo = (req, res) => {

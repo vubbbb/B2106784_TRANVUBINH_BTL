@@ -12,9 +12,9 @@ const {
 router.route("/")
   .get(verifyTokenAndAdmin, userController.getAllUsers)
 
-router.route("/info/:id")
+router.route("/info")
     .get(userController.getUserInfoByID)
-    .put(userController.changeUserInfo)
+    .put(verifyToken, userController.changeUserInfo)
 
 router.route("/order")
     .get(userController.getUserOrder)

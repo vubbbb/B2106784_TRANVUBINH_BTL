@@ -1,31 +1,42 @@
-require('dotenv').config();
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
-const createJWT = () => {
-  let payload = {name: 'Luan', age: 20};
-  let key = process.env.JWT_SECRET;
-  let token = null;
-  try{
-    let token = jwt.sign(payload, key);
-    console.log(token);
-  } catch (error) {
-    console.log(error);
+const verifyToken = (req, res, next) => {
+  const token = req.headers.token;
+  if (token) {
+    const accessToken = token.split(" ")[1];
+    jwt.verify(accessToken, process.env.JWT_ACCESS_KEY, (err, user) => {
+      if (err) res.status(403).json("Token is not valid!");
+      req.user = user;
+      next();
+    });
+  } else {
+    return res.status(401).json("You are not authenticated!");
   }
-  return token;
 };
 
-const verifyToken = (token) => {
-  let key = process.env.JWT_SECRET;
-  let data = null;
-  try {
-    let decoded = jwt.verify(token, key);
-    data = decoded;
-  } catch (error) {
-    console.log(error);
-  }
-  return data;
+
+const verifyTokenAndAuthorization = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.id === req.params.id || req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).json("You are not admin!");
+    }
+  });
+};
+
+const verifyTokenAndAdmin = (req, res, next) => {
+  verifyToken(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).json("You are not admin!");
+    }
+  });
 };
 
 module.exports = {
-  createJWT, verifyToken
-}
+  verifyToken,
+  verifyTokenAndAuthorization,
+  verifyTokenAndAdmin,
+};

@@ -12,7 +12,7 @@ router.route("/")
     .post(verifyTokenAndAdmin,bookController.createBook)
 
 router.route("/search")
-    .get(verifyToken, bookController.getBookByName)
+    .get( bookController.getBookByName)
     
 // thêm các điều kiện kiểm tra, chỉ có admin mới được phép xóa sách
 router.route("/:id")

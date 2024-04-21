@@ -10,18 +10,18 @@ exports.getBookByName = async (req, res) => {
         const book = await Book.find({ name: { $regex: name, $options: 'i' } });
         if (book.length === 0)
             return res.status(404).json({ error: "khong tim thay san pham" });
-        res.status(200).json(book);
+        return res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.massage });
     }
 }
 
 exports.getAllBooks = async (req, res) => {
     try {
         const book = await Book.find({});
-        res.status(200).json(book);
+        return res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.massage });
     }
 };
 
@@ -29,18 +29,18 @@ exports.getBookById = async (req, res) => {
     try {
         const { id } = req.params;
         const book = await Book.findById(id);
-        res.status(200).json(book);
+        return res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.massage });
     }
 };
 
 exports.createBook = async (req, res) => {
     try {
         const book = await Book.create(req.body);
-        res.status(200).json(book);
+        return res.status(200).json(book);
     } catch (error) {
-        res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.massage });
     }
 };
 
@@ -58,26 +58,26 @@ exports.updateBook = async (req, res) => {
 
         const updatedbook = await Book.findById(id);
 
-        res.status(200).json(updatedbook);
+        return res.status(200).json(updatedbook);
     } catch (error) {
-        res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.massage });
     }
 };
 
 exports.deleteBook = async (req, res) => {
     try {
         const { id } = req.params;
-        book = await Book.findByIdAndDelete(id);
+        const book = await Book.findByIdAndDelete(id);
         if (!book) {
             return res.status(404).json({ massage: "Book not found" });
         }
 
-        res.status(200).json({ massage: "Book deleted successfully" });
+        return res.status(200).json({ massage: "Book deleted successfully" });
     } catch (error) {
-        res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.massage });
     }
 };
 
 exports.getBookCount = (req, res) => {
-    res.send({ massage: "deleteBook handler" });
+    return res.send({ massage: "deleteBook handler" });
 };

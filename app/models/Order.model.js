@@ -6,9 +6,21 @@ const orderSchema = new mongoose.Schema({
         ref: 'User',
         required: true
     },
+    userName: {
+        type: String,
+        required: true
+    },
     bookId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Book',
+        required: true
+    },
+    bookName: {
+        type: String,
+        required: true
+    },
+    address: {
+        type: String,
         required: true
     },
     startDate: {
@@ -27,6 +39,10 @@ const orderSchema = new mongoose.Schema({
         type: String,
         enum: ['pending', 'approved', 'rejected'],
         default: 'pending'
+    }, 
+    quantity: {
+            type: Number,
+            required: true
     }
 });
 

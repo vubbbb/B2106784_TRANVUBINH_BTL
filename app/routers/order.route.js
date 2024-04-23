@@ -13,12 +13,11 @@ router.route("/")
     .get(verifyTokenAndAdmin, orderController.getAllOrder)
     .post(orderController.createOrder)
 
-router.route("/user")
-    .get(orderController.getUserOrder)
+
 
 
 router.route("/update")
-    .put(verifyTokenAndAdmin, orderController.updateOrder)
+    .put(verifyToken, orderController.updateOrder)
 
 
 module.exports = router;

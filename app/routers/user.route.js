@@ -16,12 +16,12 @@ router.route("/info")
     .get(userController.getUserInfoByID)
     .put(verifyToken, userController.changeUserInfo)
 
-router.route("/order")
-    .get(userController.getUserOrder)
+router.route("/orders")
+    .get(verifyToken, userController.getUserOrder)
     .post(userController.addOrder)
     .patch(userController.updateBookInOrder)
 
-router.route("/Order/:id")
+router.route("/order/:id")
     .delete(userController.removeBook)
 
 

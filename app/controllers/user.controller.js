@@ -1,4 +1,5 @@
 const User = require("../models/User.model")
+const Order = require("../models/Order.model")
 const mongoose = require('mongoose')
 const jwt = require("jsonwebtoken");
 
@@ -18,16 +19,15 @@ exports.changePassword = (req, res) => {
 
 exports.getUserInfoByID = async (req, res) => {
     try {
-        // Lấy token từ localStorage
+        // Lấy token từ headers
         const token = req.headers.token.split(" ")[1];
-        console.log(token);
         // Giải mã token để lấy ID người dùng
         const decodedToken = jwt.verify(token, process.env.JWT_ACCESS_KEY);
         const userId = decodedToken.id;
 
         // Tìm kiếm thông tin người dùng bằng ID
         const user = await User.findById(userId);
-        
+
         // Kiểm tra xem người dùng có tồn tại hay không
         if (!user) {
             return res.status(404).json({ message: "User not found" });
@@ -47,8 +47,20 @@ exports.changeUserInfo = (req, res) => {
     res.send({ massage: "changeUserInfo " });
 };
 
-exports.getUserOrder = (req, res) => {
-    res.send({ massage: "getUserOrder" });
+exports.getUserOrder = async (req, res) => {
+    try {
+        const token = req.headers.token.split(" ")[1];
+        const decodedToken = jwt.verify(token, process.env.JWT_ACCESS_KEY);
+        const userId = decodedToken.id;
+        
+        const orders = await Order.find({ userId: userId });
+        if (!orders || orders.length === 0) {
+            return res.status(404).json({ message: "Empty" });
+        }
+        res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
 };
 
 exports.addOrder = (req, res) => {

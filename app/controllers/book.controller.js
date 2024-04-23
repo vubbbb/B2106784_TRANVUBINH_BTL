@@ -18,12 +18,16 @@ exports.getBookByName = async (req, res) => {
 
 exports.getAllBooks = async (req, res) => {
     try {
-        const book = await Book.find({});
-        return res.status(200).json(book);
+        const books = await Book.find({});
+        if (books.length === 0) {
+            return res.status(404).json({ message: "No books found" });
+        }
+        return res.status(200).json(books);
     } catch (error) {
-        return res.status(500).json({ message: error.massage });
+        return res.status(500).json({ message: error.message });
     }
 };
+
 
 exports.getBookById = async (req, res) => {
     try {

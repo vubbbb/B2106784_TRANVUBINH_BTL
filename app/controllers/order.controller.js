@@ -32,20 +32,9 @@ exports.createOrder = async (req, res) => {
     } catch (error) {
         return res.status(500).json({ message: 'Đã xảy ra lỗi khi tạo đơn đặt hàng' });
     }
-};   
-
-exports.getUserOrder = async (req, res) => {
-    try {
-        const userId = req.query.userId;
-        const orders = await Order.find({ userId: userId }); // Sửa ở đây
-        if (!orders || orders.length === 0) { // Kiểm tra nếu không có đơn hàng
-            return res.status(404).json({ message: "Empty" });
-        }
-        res.status(200).json(orders);
-    } catch (error) {
-        res.status(500).json({ message: error.message });
-    }
 };
+
+
 
 exports.cancelOrder = async (req, res) => {
     try {
@@ -55,6 +44,8 @@ exports.cancelOrder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ message: "Order not found" });
         }
+
+
 
         order.status = "rejected";
         await order.save();
@@ -77,12 +68,29 @@ exports.updateOrder = async (req, res) => {
         if (!order) {
             return res.status(404).json({ message: "Order not found" });
         }
+        const bookId = order.bookId;
+        const book = await Book.findById(bookId);
+
+        if (status === "approved" && book.quantity > order.quantity) {
+            book.quantity = book.quantity - order.quantity;
+            await book.save();
+        }
+        else if (order.status === "approved" && status === "completed") {
+            book.quantity = book.quantity + order.quantity;
+            await book.save();
+        } else if (order.status === "approved" && status === "rejected") {
+            book.quantity = book.quantity + order.quantity;
+            await book.save();
+        }
+
 
         // Update the order status
         order.status = status; // Assuming the status is passed in the request body
 
         // Save the updated order
         await order.save();
+
+
 
         res.status(200).json({ message: "Order updated successfully", order });
     } catch (error) {

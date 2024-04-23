@@ -1,39 +1,42 @@
 const mongoose = require("mongoose");
 
-
-
+// Tạo mô hình sách và thêm trường tham chiếu tới mô hình nhà xuất bản
 const bookSchema = new mongoose.Schema({
     name: {
         type: String,
-        require: true,
+        required: true,
     },
     author: {
         type: String,
-        require: true,
+        required: true,
     },
     cost: {
         type: Number,
-        require: true,
+        required: true,
     },
     quantity: {
         type: Number,
-        require: true,
+        required: true,
     },
     yearOfPublication: {
         type: String,
-        require: false,
+        required: false,
     },
     image: {
         type: String,
-        require: false,
+        required: false,
     },
+    publisher: {
+        type: {
+            label: String,
+            value: mongoose.Schema.Types.ObjectId
+        },
+        required: true,
+    },
+}, {
+    timestamps: true,
+});
 
-},
-    {
-        timestamps: true,
-    }
-);
+const Book = mongoose.model('Book', bookSchema);
 
-const Book = mongoose.model('Book', bookSchema)
-
-module.exports = Book
+module.exports = Book;

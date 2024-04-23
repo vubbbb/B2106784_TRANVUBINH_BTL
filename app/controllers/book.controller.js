@@ -7,6 +7,7 @@ const mongoose = require('mongoose')
 exports.getBookByName = async (req, res) => {
     try {
         const name = req.query.name;
+
         const book = await Book.find({ name: { $regex: name, $options: 'i' } });
         if (book.length === 0)
             return res.status(404).json({ error: "khong tim thay san pham" });
@@ -41,7 +42,24 @@ exports.getBookById = async (req, res) => {
 
 exports.createBook = async (req, res) => {
     try {
-        const book = await Book.create(req.body);
+        const { name, author, cost, quantity, yearOfPublication, image, publisher } = req.body;
+        const { label, value } = publisher;
+
+        // Tạo mới cuốn sách
+        const book = await Book.create({
+            name,
+            author,
+            cost,
+            quantity,
+            yearOfPublication,
+            image,
+            publisher: {
+                label,
+                value
+            }
+        });
+
+        console.log(book);
         return res.status(200).json(book);
     } catch (error) {
         return res.status(500).json({ message: error.massage });
@@ -82,6 +100,3 @@ exports.deleteBook = async (req, res) => {
     }
 };
 
-exports.getBookCount = (req, res) => {
-    return res.send({ massage: "deleteBook handler" });
-};

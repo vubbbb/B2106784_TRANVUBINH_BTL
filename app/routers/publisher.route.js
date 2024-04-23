@@ -1,16 +1,22 @@
 const express = require('express');
-const publisherController = require("../controllers/publisher.controller");
 const router = express.Router();
-// Import the publisher controller
+const publisherController = require("../controllers/publisher.controller");
+const {
+    verifyToken,
+    verifyTokenAndAuthorization,
+    verifyTokenAndAdmin,
+} = require("../middleware/verifyToken");
 
 router.route("/")
-    .get(publisherController.getAllPublishers)
-    .post(publisherController.createPublisher)
+    .get(verifyTokenAndAdmin, publisherController.getAllPublishers)
+    .post(verifyTokenAndAdmin, publisherController.createPublisher)
+    
+router.route("/search")
+    .get(verifyTokenAndAdmin, publisherController.getPublisherByName)
 
 router.route("/:id")
-    .get(publisherController.getOnePublisher)
-    .put(publisherController.updatePublisher)
-    .delete(publisherController.deletePublisher)
+    .get(verifyTokenAndAdmin, publisherController.getPublisherById)
+    .delete(verifyTokenAndAdmin, publisherController.deletePublisher)
+    .put(verifyTokenAndAdmin, publisherController.updatePublisher)
+
 module.exports = router;
-
-

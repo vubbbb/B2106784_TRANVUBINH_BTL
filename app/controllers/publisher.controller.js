@@ -1,4 +1,4 @@
-const Publisher = require("../models/Publisher.model");
+const Publisher = require("../models/NhaXuatBan.model");
 const mongoose = require('mongoose');
 
 exports.getPublisherByName = async (req, res) => {

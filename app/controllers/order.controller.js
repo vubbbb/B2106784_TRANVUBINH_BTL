@@ -1,6 +1,6 @@
-const Order = require('../models/Order.model');
-const Book = require('../models/Book.model');
-const User = require('../models/User.model');
+const Order = require('../models/TheoDoiMuonSach.model');
+const Book = require('../models/Sach.model');
+const User = require('../models/NguoiDung.model');
 const jwt = require('jsonwebtoken');
 exports.getAllOrder = async (req, res) => {
     try {

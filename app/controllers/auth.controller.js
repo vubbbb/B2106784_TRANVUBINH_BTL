@@ -1,4 +1,4 @@
-const User = require("../models/User.model");
+const User = require("../models/NguoiDung.model");
 const jwt = require("jsonwebtoken");
 require('dotenv').config()
 const bcrypt = require("bcrypt");

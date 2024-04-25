@@ -1,4 +1,4 @@
-const User = require("../models/NguoiDung.model")
+const User = require("../models/DocGia.model")
 const Order = require("../models/TheoDoiMuonSach.model")
 const mongoose = require('mongoose')
 const jwt = require("jsonwebtoken");
